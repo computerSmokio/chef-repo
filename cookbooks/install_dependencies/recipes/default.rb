@@ -30,21 +30,6 @@ user 'ec2-user' do
     gid 'docker'
 end
 
-directory '/proc/sys/net/bridge' do
-    owner 'root'
-    group 'root'
-    mode '0755'
-    action :create
-end
-
-file '/proc/sys/net/bridge/bridge-nf-call-iptables' do
-    content '1'
-    owner 'root'
-    group 'root'
-    mode '0755'
-    action :create
-end
-
 ['docker', 'kubelet'].each do |p|
     service p do
         action :enable
