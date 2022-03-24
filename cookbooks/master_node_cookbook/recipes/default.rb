@@ -52,4 +52,4 @@ bash 'execute kubeadm init' do
     kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml
     EOH
     action :run
-endq
+end
