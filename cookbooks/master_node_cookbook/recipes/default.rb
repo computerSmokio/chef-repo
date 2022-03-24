@@ -26,6 +26,7 @@ file '/etc/systemd/system/kubelet.service.d/20-aws.conf' do
     mode '0755'
     owner 'root'
     group 'root'
+    action :create
 end
 
 bash 'execute kubeadm init' do
@@ -49,6 +50,7 @@ bash 'execute kubeadm init' do
     code <<-EOH
     sudo cp -rf /etc/kubernetes/admin.conf /home/ec2-user/.kube/config
     sudo chown ec2-user /home/ec2-user/.kube/config
+    export KUBECONFIG=/home/ec2-user/.kube/config
     kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml
     EOH
     action :run
