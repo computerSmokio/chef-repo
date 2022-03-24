@@ -1,0 +1,7 @@
+{
+  "name": "master-cluster",
+  "description": "The role for the master nodes in a kubernetes cluster",
+  "json_class": "Chef::Role",
+  "chef_type": "role",
+  "run_list": ["recipe[install_dependencies::default]", "recipe[master_node_cookbook::default]"]
+}

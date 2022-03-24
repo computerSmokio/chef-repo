@@ -1,0 +1,7 @@
+{
+    "name": "worker-cluster",
+    "description": "The role for the worker nodes in a kubernetes cluster",
+    "json_class": "Chef::Role",
+    "chef_type": "role",
+    "run_list": ["recipe[install_dependencies::default]", "recipe[worker_node_cookbook::default]"]
+}
