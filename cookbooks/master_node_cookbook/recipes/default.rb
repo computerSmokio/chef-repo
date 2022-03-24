@@ -47,9 +47,9 @@ end
 
 bash 'execute kubeadm init' do
     code <<-EOH
-    sudo cp -i /etc/kubernetes/admin.conf /home/ec2-user/.kube/config
+    sudo cp -rf /etc/kubernetes/admin.conf /home/ec2-user/.kube/config
     sudo chown ec2-user /home/ec2-user/.kube/config
     kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml
     EOH
     action :run
-end
+endq
