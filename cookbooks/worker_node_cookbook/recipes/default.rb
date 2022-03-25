@@ -26,9 +26,10 @@ file '/etc/systemd/system/kubelet.service.d/20-aws.conf' do
     mode '0755'
     owner 'root'
     group 'root'
+    action :create
 end
 
-bash 'change hostname' do
+bash 'daemon reload' do
     code <<-EOH
     sudo systemctl daemon-reload
     EOH
@@ -36,8 +37,6 @@ bash 'change hostname' do
 end
 
 service 'kubelet' do
-    action :start
+    action [:start, :enable]
 end
-service 'kubelet' do
-    action :enable
-end
+

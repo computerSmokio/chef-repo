@@ -10,6 +10,7 @@ yum_repository 'Kubernetes' do
     gpgcheck true
     repo_gpgcheck false
     gpgkey 'https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg'
+    action :create
 end
 
 ['docker','kubeadm', 'kubelet', 'kubectl'].each do |p|
@@ -23,11 +24,12 @@ file '/etc/docker/daemon.json' do
     mode '0755'
     owner 'root'
     group 'docker'
+    action :create_if_missing
 end
 
 user 'ec2-user' do
-    action :modify
     gid 'docker'
+    action :modify
 end
 
 ['docker', 'kubelet'].each do |p|

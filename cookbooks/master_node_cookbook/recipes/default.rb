@@ -10,14 +10,6 @@ directory '/etc/systemd/system/kubelet.service.d' do
     action :create
 end
 
-bash 'change hostname' do
-    code <<-EOH
-    sudo hostnamectl set-hostname master-cluster
-    EOH
-    action :run
-end
-
-
 file '/etc/systemd/system/kubelet.service.d/20-aws.conf' do
     content <<-EOH
     [Service]
@@ -29,30 +21,22 @@ file '/etc/systemd/system/kubelet.service.d/20-aws.conf' do
     action :create
 end
 
-bash 'execute kubeadm init' do
+bash 'Change hostname, Create the cluster and install basic pods' do
     code <<-EOH
-    kubeadm init --token-ttl 0 --ignore-preflight-errors=NumCPU --ignore-preflight-errors=Mem --pod-network-cidr=10.244.0.0/16
-    EOH
-    action :run
-end
-
-service 'kubelet' do
-    action :enable
-end
-
-directory '/home/ec2-user/.kube' do
-    owner 'ec2-user'
-    mode '0755'
-    action :create
-end
-
-bash 'execute kubeadm init' do
-    code <<-EOH
+    sudo hostnamectl set-hostname master-cluster
+    kubeadm init --ignore-preflight-errors=NumCPU --ignore-preflight-errors=Mem --pod-network-cidr=10.244.0.0/16
+    mkdir -p /home/ec2-user/.kube
     sudo cp -rf /etc/kubernetes/admin.conf /home/ec2-user/.kube/config
     sudo chown ec2-user /home/ec2-user/.kube/config
     export KUBECONFIG=/home/ec2-user/.kube/config
     kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml
     kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/baremetal/1.23/deploy.yaml
     EOH
+    guard_interpreter :bash
+    not_if 'kubectl get pods> /dev/null 2>&1; echo $?'
     action :run
+end
+
+service 'kubelet' do
+    action :enable
 end
