@@ -52,6 +52,7 @@ bash 'execute kubeadm init' do
     sudo chown ec2-user /home/ec2-user/.kube/config
     export KUBECONFIG=/home/ec2-user/.kube/config
     kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml
+    kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/baremetal/1.23/deploy.yaml
     EOH
     action :run
 end
