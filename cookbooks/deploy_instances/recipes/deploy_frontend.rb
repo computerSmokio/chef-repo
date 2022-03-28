@@ -6,7 +6,7 @@ bash 'rollout frontend' do
     action :run
 end
 bash 'deploy frontend' do
-    user "ec2-user"
+    user 'root'
     code <<-EOH
     kubectl apply -f https://raw.githubusercontent.com/computerSmokio/rampupv2/main/kubernetes_related/frontend_deployment.yaml
     EOH
