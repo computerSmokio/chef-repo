@@ -7,7 +7,7 @@ bash 'rollout backend' do
 end
 bash 'deploy backend' do
     code <<-EOH
-    kubectl rollout apply backend-movie-deployment -n rampup-backend-ns
+    kubectl rollout apply -f https://raw.githubusercontent.com/computerSmokio/rampupv2/main/kubernetes_related/backend_deployment.yaml
     EOH
     not_if 'kubectl get deployments backend-movie-deployment -n rampup-backend-ns > /dev/null 2>&1'
     action :run

@@ -7,7 +7,7 @@ bash 'rollout frontend' do
 end
 bash 'deploy frontend' do
     code <<-EOH
-    kubectl rollout apply frontend-movie-deployment -n rampup-frontend-ns
+    kubectl rollout apply -f https://raw.githubusercontent.com/computerSmokio/rampupv2/main/kubernetes_related/frontend_deployment.yaml
     EOH
     not_if 'kubectl get deployments frontend-movie-deployment -n rampup-frontend-ns > /dev/null 2>&1'
     action :run
