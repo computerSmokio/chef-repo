@@ -31,6 +31,7 @@ bash 'Change hostname, Create the cluster and install basic pods' do
     export KUBECONFIG=/home/ec2-user/.kube/config
     kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml
     kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/baremetal/1.23/deploy.yaml
+    kubectl delete -A ValidatingWebhookConfiguration -n ingress-nginx ingress-nginx-admission
     EOH
     guard_interpreter :bash
     not_if 'kubectl get pods> /dev/null 2>&1'

@@ -7,8 +7,8 @@ bash 'deploy backend and frontend' do
     user 'ec2-user'
     environment 'KUBECONFIG' => '/home/ec2-user/.kube/config'
     code <<-EOH
-    sudo kubectl apply -f https://raw.githubusercontent.com/computerSmokio/rampupv2/main/kubernetes_related/backend_deployment.yaml
-    sudo kubectl apply -f https://raw.githubusercontent.com/computerSmokio/rampupv2/main/kubernetes_related/frontend_deployment.yaml
+    kubectl apply -f https://raw.githubusercontent.com/computerSmokio/rampupv2/main/kubernetes_related/backend_deployment.yaml
+    kubectl apply -f https://raw.githubusercontent.com/computerSmokio/rampupv2/main/kubernetes_related/frontend_deployment.yaml
     EOH
     action :run
 end
