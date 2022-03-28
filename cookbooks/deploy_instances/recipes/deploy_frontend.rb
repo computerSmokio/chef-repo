@@ -6,7 +6,8 @@ bash 'rollout frontend' do
     action :run
 end
 bash 'deploy frontend' do
-    user 'root'
+    user 'ec2-user'
+    environment 'KUBECONFIG' => '/home/ec2-user/.kube/config'
     code <<-EOH
     kubectl apply -f https://raw.githubusercontent.com/computerSmokio/rampupv2/main/kubernetes_related/frontend_deployment.yaml
     EOH
