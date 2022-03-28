@@ -33,7 +33,7 @@ bash 'Change hostname, Create the cluster and install basic pods' do
     kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/baremetal/1.23/deploy.yaml
     EOH
     guard_interpreter :bash
-    not_if 'kubectl get pods> /dev/null 2>&1; echo $?'
+    not_if 'kubectl get pods> /dev/null 2>&1'
     action :run
 end
 
