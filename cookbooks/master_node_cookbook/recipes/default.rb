@@ -30,7 +30,7 @@ bash 'Change hostname, Create the cluster and install basic pods' do
     sudo chown ec2-user /home/ec2-user/.kube/config
     export KUBECONFIG=/home/ec2-user/.kube/config
     kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml
-    kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/baremetal/1.23/deploy.yaml
+    kubectl apply -f https://raw.githubusercontent.com/computerSmokio/rampupv2/main/kubernetes_related/ingress_nginx.yaml
     kubectl delete -A ValidatingWebhookConfiguration -n ingress-nginx ingress-nginx-admission
     EOH
     guard_interpreter :bash
